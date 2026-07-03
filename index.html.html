@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yinzi Gong | Urban Designer & Architect Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pureWhite: '#ffffff',
+                        minimalGray: '#fcfcfc',
+                        textMain: '#111111',
+                        textMuted: '#666666',
+                        borderLight: '#f0f0f0',
+                        accentGreen: '#A4D3A5',
+                        accentGreenHover: '#8cb98d'
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', '"Helvetica Neue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Noto Sans SC (思源黑体) and custom weights -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 200; /* Extremely thin weight for architectural look */
+            background-color: #ffffff;
+            color: #111111;
+            letter-spacing: 0.08em;
+        }
+
+        /* Clean scrollbar mirroring premium minimalist UI */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4d4d4;
+            border-radius: 9999px;
+        }
+
+        /* Staggered delay items for directory dropdown animation */
+        .delay-item-1 { transition-delay: 80ms; }
+        .delay-item-2 { transition-delay: 130ms; }
+        .delay-item-3 { transition-delay: 180ms; }
+        .delay-item-4 { transition-delay: 230ms; }
+        .delay-item-5 { transition-delay: 280ms; }
+
+        /* Custom Frosted Glass Cursor (艾绿色 #A4D3A5) */
+        @media (pointer: fine) {
+            html, body {
+                cursor: none; /* Hide standard cursor for screen users with physical pointers */
+            }
+            a, button, [role="button"], input, textarea, select, .custom-trigger {
+                cursor: none !important; /* Force hide custom pointer on hoverables */
+            }
+            .custom-cursor-container {
+                display: block;
+            }
+        }
+        @media (pointer: coarse) {
+            /* Hide custom cursor on mobile touchscreens */
+            .custom-cursor-container {
+                display: none !important;
+            }
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #A4D3A5;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+        }
+
+        .cursor-ring {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(164, 211, 165, 0.15);
+            border: 1px solid rgba(164, 211, 165, 0.4);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        background-color 0.3s ease, 
+                        border 0.3s ease;
+        }
+
+        /* Hover states triggered via JS classes */
+        body.cursor-hover-active .cursor-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #8cb98d;
+        }
+
+        body.cursor-hover-active .cursor-ring {
+            width: 52px;
+            height: 52px;
+            background-color: rgba(164, 211, 165, 0.28);
+            border: 1.5px solid rgba(164, 211, 165, 0.75);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* CSS for the physical extraction animation matching folder.jpg style */
+        .folder-wrapper:hover .inner-sheet,
+        .folder-wrapper.extracted .inner-sheet {
+            transform: translateY(-160px) scale(1.015) rotate(-1.5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+            z-index: 30;
+        }
+
+        .folder-wrapper:hover .folder-front,
+        .folder-wrapper.extracted .folder-front {
+            border-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                font-size: 11px !important;
+            }
+            .print-grid {
+                grid-template-cols: repeat(12, minmax(0, 1fr)) !important;
+            }
+            .print-col-span-12 {
+                grid-column: span 12 / span 12 !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pureWhite text-textMain antialiased selection:bg-neutral-100 selection:text-neutral-900">
+
+    <!-- Custom Cursor Nodes -->
+    <div class="custom-cursor-container">
+        <div class="cursor-dot" id="cursorDot"></div>
+        <div class="cursor-ring" id="cursorRing"></div>
+    </div>
+
+    <!-- Minimalist Sticky Header -->
+    <header class="fixed top-0 left-0 w-full z-40 bg-white/75 backdrop-blur-md border-b border-neutral-100 no-print">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="text-[10px] uppercase tracking-[0.25em] font-light hover:opacity-60 transition-opacity">
+                Yinzi Gong — ARCHITECTURE & URBANISM
+            </a>
+            <div class="flex items-center space-x-6">
+                <button onclick="window.print()" class="text-[10px] uppercase tracking-widest font-light text-textMuted hover:text-textMain transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-print text-[9px]"></i> 打印纸质简历
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Centered Hero & Interactive Directory Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-16 px-6 bg-pureWhite select-none">
+        <div class="w-full max-w-4xl text-center space-y-10">
+
+            <!-- Centered Trigger Name -->
+            <div class="group relative inline-flex flex-col items-center py-4">
+                <!-- Trigger Area -->
+                <h1 class="text-4xl sm:text-6xl font-extralight tracking-[0.2em] text-neutral-800 transition-all duration-700 cursor-pointer relative py-4">
+                    Yinzi Gong
+                    <!-- Fine architectural underline -->
+                    <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[1px] bg-neutral-300 group-hover:w-44 transition-all duration-700"></span>
+                </h1>
+
+                <!-- Sliding dropdown directory -->
+                <div class="overflow-hidden max-h-0 opacity-0 group-hover:max-h-[350px] group-hover:opacity-100 transition-all duration-[800ms] ease-in-out flex flex-col items-center space-y-4 mt-8">
+                    
+                    <a href="#about" class="text-neutral-400 hover:text-neutral-900 transition-all duration-300 font-light tracking-[0.3em] uppercase text-[10px] transform translate-y-3 group-hover:translate-y-0 delay-item-1 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-accentGreen transition-colors duration-500"></span>
+                        about me
+                    </a>
+
+                    <a href="#skills" class="text-neutral-400 hover:text-neutral-900 transition-all duration-300 font-light tracking-[0.3em] uppercase text-[10px] transform translate-y-3 group-hover:translate-y-0 delay-item-2 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-accentGreen transition-colors duration-500"></span>
+                        skills
+                    </a>
+
+                    <a href="#experience" class="text-neutral-400 hover:text-neutral-900 transition-all duration-300 font-light tracking-[0.3em] uppercase text-[10px] transform translate-y-3 group-hover:translate-y-0 delay-item-3 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-accentGreen transition-colors duration-500"></span>
+                        experience
+                    </a>
+
+                    <a href="#project" class="text-neutral-400 hover:text-neutral-900 transition-all duration-300 font-light tracking-[0.3em] uppercase text-[10px] transform translate-y-3 group-hover:translate-y-0 delay-item-4 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-accentGreen transition-colors duration-500"></span>
+                        project
+                    </a>
+
+                    <a href="#contact" class="text-neutral-400 hover:text-neutral-900 transition-all duration-300 font-light tracking-[0.3em] uppercase text-[10px] transform translate-y-3 group-hover:translate-y-0 delay-item-5 flex items-center gap-2">
+                        <span class="w-1.5 h-1.5 bg-neutral-200 rounded-full group-hover:bg-accentGreen transition-colors duration-500"></span>
+                        contact me
+                    </a>
+                    
+                </div>
+            </div>
+
+            <!-- Subtitle Profile -->
+            <p class="text-[11px] tracking-[0.25em] text-textMuted font-light uppercase pt-2 max-w-xl mx-auto leading-relaxed">
+                Associate Urban Designer & Architect <br class="hidden sm:inline">
+                以 11 年世界五百强外企深耕经验，驾驭多尺度城市规划与先锋建筑概念
+            </p>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+            <div class="w-[1px] h-10 bg-neutral-300 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1/2 bg-neutral-800 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT ME SECTION -->
+    <section id="about" class="py-32 px-6 border-t border-neutral-100 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Portrait Column (Reference "Yinzi Gong_resume CH EN.pdf") -->
+                <div class="md:col-span-4 space-y-6">
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light">01 / Profile</span>
+                    <h2 class="text-xl font-light tracking-widest mt-2 text-neutral-800">关于我 / PROFILE</h2>
+                    
+                    <!-- Portrait frame -->
+                    <div class="w-full aspect-[4/5] overflow-hidden bg-neutral-50 rounded-sm border border-neutral-100 relative group">
+                        <!-- Simulated portrait loading with elegant fallback silhouette -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-neutral-300 p-6 text-center">
+                            <i class="fa-regular fa-user text-3xl font-extralight mb-2"></i>
+                            <span class="text-[9px] uppercase tracking-wider text-neutral-400">Yinzi Gong</span>
+                            <span class="text-[8px] text-neutral-400 mt-1 font-mono">[Portrait from PDF Page 1]</span>
+                        </div>
+                        <img src="Yinzi Gong_resume CH EN.pdf" alt="Yinzi Gong Portrait" 
+                             class="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                             onerror="this.style.display='none';">
+                    </div>
+                </div>
+
+                <!-- Right Profile Details Column -->
+                <div class="md:col-span-8 space-y-6 text-[13px] text-textMuted font-light leading-relaxed">
+                    <div class="space-y-4">
+                        <p class="text-neutral-800 leading-loose">
+                            作为一位城市设计和建筑师，在十一年的世界五百强外资企业（AECOM 等）工作经验中，我深度参与了城市总体规划、新城设计、产业园区规划、旅游小镇、休闲度假区、建筑概念设计等多种尺度的规划与建筑设计项目。
+                        </p>
+                        <p class="leading-loose">
+                            长期的全球化项目经历，使我积累了极其丰富的跨国、跨团队协作经验。我擅长将宏观的可持续性生态框架与中微观极富雕塑感的空间形态融合，通过精密合理的空间形态推敲与最新的人工智能造型渲染技术，为城市的可持续发展提供具备高度落地方案的顶层空间设计。
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 border-t border-neutral-100 pt-6">
+                        <p class="text-neutral-700 leading-relaxed italic">
+                            As an associate urban designer and architect with over ten years of trans-regional & cross-team working experience in an international Fortune Global 500 company (such as AECOM), I have deeply participated in various planning and design projects across different scales, including urban master planning, new town design, industrial park planning, tourist towns, leisure resorts, and conceptual architectural design.
+                        </p>
+                        <p class="leading-relaxed italic">
+                            With extensive global project experience, I excel in synthesizing macro-scale sustainable ecological frameworks with micro-scale sculptural spatial forms. Through precise spatial form-finding and cutting-edge generative AI rendering technologies, I deliver highly feasible top-tier spatial designs for sustainable urban development.
+                        </p>
+                    </div>
+
+                    <!-- Education Detail -->
+                    <div class="pt-8 border-t border-neutral-100">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light mb-4">Education / 教育背景</span>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-[13px] font-normal text-neutral-800">城市规划专业硕士 / Master of Urbanism</h4>
+                                    <p class="text-[11px] text-neutral-400">德国亚琛工业大学 RWTH Aachen University</p>
+                                </div>
+                                <span class="text-[11px] text-neutral-400 font-mono">2011 - 2014</span>
+                            </div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-[13px] font-normal text-neutral-800">建筑学学士 / Bachelor of Architecture</h4>
+                                    <p class="text-[11px] text-neutral-400">大连理工大学 Dalian University of Technology</p>
+                                </div>
+                                <span class="text-[11px] text-neutral-400 font-mono">2006 - 2011</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="pt-6">
+                        <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light mb-2">Languages / 语言技能</span>
+                        <div class="flex flex-wrap gap-4 text-[11px] text-neutral-700">
+                            <span class="bg-neutral-50 px-3 py-1 rounded-sm border border-neutral-100">普通话 (Native)</span>
+                            <span class="bg-neutral-50 px-3 py-1 rounded-sm border border-neutral-100">英语 (IELTS 6.5)</span>
+                            <span class="bg-neutral-50 px-3 py-1 rounded-sm border border-neutral-100">德语 (DSH 2)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-32 px-6 border-t border-neutral-100 bg-minimalGray">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                <div class="md:col-span-4">
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light">02 / Expertise</span>
+                    <h2 class="text-xl font-light tracking-widest mt-2 text-neutral-800">专业技能</h2>
+                </div>
+                <div class="md:col-span-8 space-y-10">
+                    
+                    <!-- Skill Set: 3D modeling -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs tracking-wider">
+                            <span class="font-normal text-textMain uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-cube text-[10px] text-neutral-400"></i> 三维模型 / 3D Modeling
+                            </span>
+                            <span class="text-neutral-400 font-light font-mono">Auto CAD, Sketch Up, Physical Model</span>
+                        </div>
+                        <div class="w-full h-[1px] bg-neutral-200">
+                            <div class="h-full bg-accentGreen transition-all duration-1000" style="width: 95%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Set: Rendering -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs tracking-wider">
+                            <span class="font-normal text-textMain uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-[10px] text-neutral-400"></i> 渲染软件 / Rendering
+                            </span>
+                            <span class="text-neutral-400 font-light font-mono">Vray for Sketchup</span>
+                        </div>
+                        <div class="w-full h-[1px] bg-neutral-200">
+                            <div class="h-full bg-accentGreen transition-all duration-1000" style="width: 88%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Set: Design Graphics -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs tracking-wider">
+                            <span class="font-normal text-textMain uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-bezier-curve text-[10px] text-neutral-400"></i> 视觉表现与排版 / Graphics & Layout
+                            </span>
+                            <span class="text-neutral-400 font-light font-mono">InDesign, Photoshop, Illustrator</span>
+                        </div>
+                        <div class="w-full h-[1px] bg-neutral-200">
+                            <div class="h-full bg-accentGreen transition-all duration-1000" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Set: Next-Gen Tools -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-xs tracking-wider">
+                            <span class="font-normal text-textMain uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-robot text-[10px] text-neutral-400"></i> AI 探索与辅助设计 / AI Tools & Others
+                            </span>
+                            <span class="text-neutral-400 font-light font-mono">Midjourney, Sketch, Hand Drawing, MS Office</span>
+                        </div>
+                        <div class="w-full h-[1px] bg-neutral-200">
+                            <div class="h-full bg-accentGreen transition-all duration-1000" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Clean Visual Skill Icons Box (Mapped to actual image assets provided) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 pt-8">
+                        
+                        <!-- AutoCAD Icon Card -->
+                        <div class="bg-white border border-neutral-100 rounded-sm p-4 hover:border-neutral-300 hover:shadow-sm transition-all duration-300 flex flex-col items-center justify-between h-32">
+                            <div class="w-12 h-12 flex items-center justify-center relative">
+                                <img src="autocad icon.jpg" alt="AutoCAD Icon" class="w-full h-full object-contain rounded-sm" onerror="this.src='https://placehold.co/48x48/fbfbfb/a4d3a5?text=CAD'">
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-normal tracking-wide text-neutral-800">AutoCAD</span>
+                                <span class="text-[8px] text-neutral-400 block mt-0.5 font-mono">3D Drafting</span>
+                            </div>
+                        </div>
+
+                        <!-- SketchUp Icon Card -->
+                        <div class="bg-white border border-neutral-100 rounded-sm p-4 hover:border-neutral-300 hover:shadow-sm transition-all duration-300 flex flex-col items-center justify-between h-32">
+                            <div class="w-12 h-12 flex items-center justify-center relative">
+                                <img src="sketchup icon.jpg" alt="SketchUp Icon" class="w-full h-full object-contain rounded-sm" onerror="this.src='https://placehold.co/48x48/fbfbfb/a4d3a5?text=SU'">
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-normal tracking-wide text-neutral-800">SketchUp</span>
+                                <span class="text-[8px] text-neutral-400 block mt-0.5 font-mono">Volume Study</span>
+                            </div>
+                        </div>
+
+                        <!-- Adobe Suite Card (Clipped neatly for premium visual layout) -->
+                        <div class="bg-white border border-neutral-100 rounded-sm p-4 hover:border-neutral-300 hover:shadow-sm transition-all duration-300 flex flex-col items-center justify-between h-32">
+                            <div class="w-12 h-12 flex items-center justify-center overflow-hidden rounded-sm relative">
+                                <!-- Elegant scaling zoom on the multi-suite image to emphasize professional grade layout -->
+                                <img src="adobe icon.jpg" alt="Adobe Creative Suite" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/48x48/fbfbfb/a4d3a5?text=Adobe'">
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-normal tracking-wide text-neutral-800">Adobe Creative</span>
+                                <span class="text-[8px] text-neutral-400 block mt-0.5 font-mono">Ps / Ai / Id</span>
+                            </div>
+                        </div>
+
+                        <!-- Midjourney Icon Card -->
+                        <div class="bg-white border border-neutral-100 rounded-sm p-4 hover:border-neutral-300 hover:shadow-sm transition-all duration-300 flex flex-col items-center justify-between h-32">
+                            <div class="w-12 h-12 flex items-center justify-center relative">
+                                <img src="midjourney icon.jpg" alt="Midjourney Icon" class="w-full h-full object-contain rounded-sm" onerror="this.src='https://placehold.co/48x48/fbfbfb/a4d3a5?text=MJ'">
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-normal tracking-wide text-neutral-800">Midjourney</span>
+                                <span class="text-[8px] text-neutral-400 block mt-0.5 font-mono">AI Renderings</span>
+                            </div>
+                        </div>
+
+                        <!-- Office Icon Card -->
+                        <div class="bg-white border border-neutral-100 rounded-sm p-4 hover:border-neutral-300 hover:shadow-sm transition-all duration-300 flex flex-col items-center justify-between h-32">
+                            <div class="w-12 h-12 flex items-center justify-center relative">
+                                <img src="office icon.jpg" alt="MS Office Icon" class="w-full h-full object-contain rounded-sm" onerror="this.src='https://placehold.co/48x48/fbfbfb/a4d3a5?text=Office'">
+                            </div>
+                            <div class="text-center">
+                                <span class="block text-[10px] font-normal tracking-wide text-neutral-800">MS Office</span>
+                                <span class="text-[8px] text-neutral-400 block mt-0.5 font-mono">Reports & PPT</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE TIMELINE SECTION -->
+    <section id="experience" class="py-32 px-6 border-t border-neutral-100 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light">03 / Experience</span>
+                    <h2 class="text-xl font-light tracking-widest mt-2 text-neutral-800">履历进程</h2>
+                </div>
+                
+                <div class="md:col-span-8 space-y-12">
+                    
+                    <!-- Job Item 1 -->
+                    <div class="relative pl-6 border-l border-neutral-100 space-y-4">
+                        <div class="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full bg-accentGreen"></div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-neutral-400">2016年至今</span>
+                            <span class="text-[10px] bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded-sm">主任设计师</span>
+                        </div>
+                        <h3 class="text-[14px] font-normal tracking-wide text-neutral-800">AECOM 上海办公室 主任城市设计师 / Associate Urban Designer</h3>
+                        <p class="text-[11px] text-neutral-400 uppercase tracking-widest">世界五百强外企核心设计部成员</p>
+                        
+                        <!-- Real Projects list under AECOM from PDF -->
+                        <div class="space-y-2 pt-2">
+                            <span class="text-[9px] uppercase tracking-[0.3em] text-neutral-400 block">主导及参与的重点项目 / Key Projects:</span>
+                            <ul class="text-xs text-textMuted font-light list-disc list-inside space-y-1.5 leading-relaxed">
+                                <li>阿联酋阿布扎比 Muwaylih 片区前期概念规划 (Abu Dhabi Muwaylih Vision Masterplan, UAE)</li>
+                                <li>重庆武隆白马山康养度假区策划方案征集 (Chongqing Wulong Baimashan Health Resort Masterplan Solicitation)</li>
+                                <li>浙江杭州阿里巴巴南湖小镇概念规划 (Hangzhou Alibaba South Lake Town Project, Zhejiang)</li>
+                                <li>海南三亚南繁科技城总体概念规划及城市设计 (Conceptual Planning & Urban Design of Sanya Nanfan Science and Technology City, Hainan)</li>
+                                <li>湖南长沙梅溪湖二期概念规划及城市设计国际竞赛 (Changsha Meixihu Phase II Concept Planning & Urban Design International Competition, Hunan)</li>
+                                <li>四川成都医学城概念规划及城市设计国际竞赛 (Conceptual Urban Design Competition of Chengdu Health Medical Center, Sichuan)</li>
+                                <li>上海三林片区城市设计深化 (Sanlin Riverside South Area Urban Design Deepening, Shanghai)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Job Item 2 -->
+                    <div class="relative pl-6 border-l border-neutral-100 space-y-4">
+                        <div class="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full bg-neutral-200"></div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-neutral-400">2015 - 2016</span>
+                            <span class="text-[10px] bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded-sm">规划师</span>
+                        </div>
+                        <h3 class="text-[14px] font-normal tracking-wide text-neutral-800">上海同济城市规划设计研究院 规划师 / Planner</h3>
+                        <p class="text-[11px] text-neutral-400 uppercase tracking-widest">国内顶尖规划设计机构</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <span class="text-[9px] uppercase tracking-[0.3em] text-neutral-400 block">主导及参与项目：</span>
+                            <ul class="text-xs text-textMuted font-light list-disc list-inside space-y-1.5 leading-relaxed">
+                                <li>青岛西海岸新区滨海大道总体规划及城市设计 (Qingdao Binhai Avenue Master Planning)</li>
+                                <li>青岛古镇口大学城概念性规划设计 (Qingdao Guzhenkou University Town Concept)</li>
+                                <li>荔波县城总体城市设计概念规划方案 (Libo County Overall Urban Design)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Job Item 3 -->
+                    <div class="relative pl-6 border-l border-neutral-100 space-y-4">
+                        <div class="absolute -left-[4.5px] top-1.5 w-2 h-2 rounded-full bg-neutral-200"></div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-neutral-400">2013 - 2014</span>
+                            <span class="text-[10px] bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded-sm">实习规划师</span>
+                        </div>
+                        <h3 class="text-[14px] font-normal tracking-wide text-neutral-800">德国法兰克福 AS&P 规划事务所 实习规划师 / Intern Planner</h3>
+                        <p class="text-[11px] text-neutral-400 uppercase tracking-widest">Albert Speer & Partner GmbH / 德国顶级建筑与城市规划机构</p>
+                        
+                        <div class="space-y-2 pt-2">
+                            <span class="text-[9px] uppercase tracking-[0.3em] text-neutral-400 block">国际化参与项目：</span>
+                            <ul class="text-xs text-textMuted font-light list-disc list-inside space-y-1.5 leading-relaxed">
+                                <li>尼日利亚阿布贾世纪新城总体规划及城市设计 (Abuja Centenary City, Nigeria)</li>
+                                <li>沙特阿拉伯利雅得 Metro Manuel 街道规划及节点设计 (Metro Manuel Urban Design)</li>
+                                <li>德国慕尼黑宝马研发中心城市更新概念规划方案 (BMW FIZ Forschungs- und Innovationszentrum)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECTED PROJECTS SECTION -->
+    <section id="project" class="py-32 px-6 border-t border-neutral-100 bg-[#fafafa]">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mb-24">
+                <div class="md:col-span-4">
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light">04 / Portfolio Folders</span>
+                    <h2 class="text-xl font-light tracking-widest mt-2 text-neutral-800">主要项目经验</h2>
+                </div>
+                <div class="md:col-span-8">
+                    <p class="text-xs text-textMuted font-light leading-relaxed max-w-lg">
+                        通过多尺度设计控制与精细化空间形态表达，展现从宏观总体空间框架到中微观空间、AI生成式渲染的完整推敲过程。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sleek Horizontal Folder System with slide-up sheets (Inspired by folder.jpg) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 pt-12">
+                
+                <!-- Folder 1: 片区规划 (District Planning) -->
+                <div class="folder-wrapper relative h-[420px] flex flex-col justify-end group cursor-pointer" onclick="this.classList.toggle('extracted')">
+                    
+                    <!-- Interactive sliding sheet (slides upwards, mimicking paper extraction) -->
+                    <div class="inner-sheet absolute bottom-4 left-[6%] w-[88%] h-[330px] bg-white rounded-xl shadow-sm z-10 transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1) p-4 flex flex-col justify-between border border-neutral-100">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-[9px] text-neutral-400 font-mono">
+                                <span>DISTRICT MASTERPLAN</span>
+                                <span>FILE NO.01</span>
+                            </div>
+                            
+                            <!-- Vector Schematic representation from provided icon_district_planning_v2.png -->
+                            <div class="w-full h-24 bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100 flex items-center justify-center p-2 transition-transform duration-500 group-hover:scale-[1.02]">
+                                <img src="icon_district_planning_v2.png" alt="District Planning Icon" class="max-w-full max-h-full object-contain mix-blend-multiply" onerror="this.style.opacity='0.4';">
+                            </div>
+
+                            <h4 class="text-xs font-normal text-neutral-800 tracking-wider">01 / 总体空间规划</h4>
+                            <p class="text-[10px] text-textMuted font-light leading-relaxed">
+                                规划大尺度空间开发，建立弹性且生态的可持续发展总体框架。统筹水面生态、慢行系统与TOD核心。
+                            </p>
+                        </div>
+                        <button onclick="event.stopPropagation(); openModal('project-1')" class="w-full text-center py-2 bg-neutral-900 text-white rounded-md text-[10px] tracking-widest uppercase hover:bg-accentGreen transition-colors duration-300">
+                            详细案例 / DETAILS
+                        </button>
+                    </div>
+
+                    <!-- Sleeve Cover Front Panel (Frosted Acrylic/Glass look echoing folder.jpg) -->
+                    <!-- Low-saturation Gradient Background: Pale Mint/Sage -->
+                    <div class="folder-front absolute bottom-0 left-0 w-full h-[240px] rounded-3xl backdrop-blur-md bg-white/20 border border-white/60 shadow-lg z-20 flex flex-col justify-between p-6 transition-all duration-500 overflow-hidden" 
+                         style="background-image: linear-gradient(135deg, rgba(242,247,242,0.8) 0%, rgba(209,230,211,0.6) 100%);">
+                        
+                        <!-- Top Sleeve subtle accent line -->
+                        <div class="w-8 h-[2px] bg-[#A4D3A5] rounded-full opacity-60"></div>
+
+                        <!-- Sleeve Typography (Polaroid/Glass Metadata Style) -->
+                        <div class="space-y-1 pt-6 text-left">
+                            <span class="text-[9px] tracking-[0.3em] text-[#6d8a70] uppercase block font-light">CATEGORY 01</span>
+                            <h3 class="text-sm tracking-[0.2em] text-neutral-800 font-normal">片区规划</h3>
+                            <div class="w-full h-[1px] bg-neutral-300/30 my-2"></div>
+                            <span class="text-[8px] font-mono tracking-widest text-[#6d8a70]/80">LAND DEVELOPMENT — 2016 / 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Folder 2: 项目表达 (Project Expression) -->
+                <div class="folder-wrapper relative h-[420px] flex flex-col justify-end group cursor-pointer" onclick="this.classList.toggle('extracted')">
+                    
+                    <!-- Interactive sliding sheet (slides upwards) -->
+                    <div class="inner-sheet absolute bottom-4 left-[6%] w-[88%] h-[330px] bg-white rounded-xl shadow-sm z-10 transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1) p-4 flex flex-col justify-between border border-neutral-100">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-[9px] text-neutral-400 font-mono">
+                                <span>GRAPHICS & STRUCTURE</span>
+                                <span>FILE NO.02</span>
+                            </div>
+                            
+                            <!-- Vector Schematic representation from provided icon_typology.png -->
+                            <div class="w-full h-24 bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100 flex items-center justify-center p-2 transition-transform duration-500 group-hover:scale-[1.02]">
+                                <img src="icon_typology.png" alt="Typology Icon" class="max-w-full max-h-full object-contain mix-blend-multiply" onerror="this.style.opacity='0.4';">
+                            </div>
+
+                            <h4 class="text-xs font-normal text-neutral-800 tracking-wider">02 / 多尺度空间形态表达</h4>
+                            <p class="text-[10px] text-textMuted font-light leading-relaxed">
+                                对中微观建筑体量进行退台切角、业态类型学(Typology)和精细步行街道断面的标准控制与推敲。
+                            </p>
+                        </div>
+                        <button onclick="event.stopPropagation(); openModal('project-2')" class="w-full text-center py-2 bg-neutral-900 text-white rounded-md text-[10px] tracking-widest uppercase hover:bg-accentGreen transition-colors duration-300">
+                            详细案例 / DETAILS
+                        </button>
+                    </div>
+
+                    <!-- Sleeve Cover Front Panel (Frosted Acrylic/Glass look) -->
+                    <!-- Low-saturation Gradient Background: Pale Ice Blue/Slate -->
+                    <div class="folder-front absolute bottom-0 left-0 w-full h-[240px] rounded-3xl backdrop-blur-md bg-white/20 border border-white/60 shadow-lg z-20 flex flex-col justify-between p-6 transition-all duration-500 overflow-hidden"
+                         style="background-image: linear-gradient(135deg, rgba(242,246,24a,0.85) 0%, rgba(211,221,240,0.65) 100%);">
+                        
+                        <!-- Top Sleeve subtle accent line -->
+                        <div class="w-8 h-[2px] bg-blue-300 rounded-full opacity-60"></div>
+
+                        <!-- Sleeve Typography -->
+                        <div class="space-y-1 pt-6 text-left">
+                            <span class="text-[9px] tracking-[0.3em] text-[#637996] uppercase block font-light">CATEGORY 02</span>
+                            <h3 class="text-sm tracking-[0.2em] text-neutral-800 font-normal">项目表达</h3>
+                            <div class="w-full h-[1px] bg-neutral-300/30 my-2"></div>
+                            <span class="text-[8px] font-mono tracking-widest text-[#637996]/80">FORM & TYPOLOGY — 2015 / 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Folder 3: AI渲染 (AI Rendering) -->
+                <div class="folder-wrapper relative h-[420px] flex flex-col justify-end group cursor-pointer" onclick="this.classList.toggle('extracted')">
+                    
+                    <!-- Interactive sliding sheet (slides upwards) -->
+                    <div class="inner-sheet absolute bottom-4 left-[6%] w-[88%] h-[330px] bg-white rounded-xl shadow-sm z-10 transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1) p-4 flex flex-col justify-between border border-neutral-100">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-[9px] text-neutral-400 font-mono">
+                                <span>AI GENERATIVE DESIGN</span>
+                                <span>FILE NO.03</span>
+                            </div>
+                            
+                            <!-- Vector Schematic representation from provided icon_AI.png -->
+                            <div class="w-full h-24 bg-neutral-50 rounded-lg overflow-hidden border border-neutral-100 flex items-center justify-center p-2 transition-transform duration-500 group-hover:scale-[1.02]">
+                                <img src="icon_AI.png" alt="AI Rendering Icon" class="max-w-full max-h-full object-contain mix-blend-multiply" onerror="this.style.opacity='0.4';">
+                            </div>
+
+                            <h4 class="text-xs font-normal text-neutral-800 tracking-wider">03 / 生成式AI探索研究</h4>
+                            <p class="text-[10px] text-textMuted font-light leading-relaxed">
+                                利用 Midjourney 与 Stable Diffusion 进行前沿探索，秒级表达东方高差山地温泉及铺装质感。
+                            </p>
+                        </div>
+                        <button onclick="event.stopPropagation(); openModal('project-3')" class="w-full text-center py-2 bg-neutral-900 text-white rounded-md text-[10px] tracking-widest uppercase hover:bg-accentGreen transition-colors duration-300">
+                            详细案例 / DETAILS
+                        </button>
+                    </div>
+
+                    <!-- Sleeve Cover Front Panel (Frosted Acrylic/Glass look) -->
+                    <!-- Low-saturation Gradient Background: Pale Peach/Apricot -->
+                    <div class="folder-front absolute bottom-0 left-0 w-full h-[240px] rounded-3xl backdrop-blur-md bg-white/20 border border-white/60 shadow-lg z-20 flex flex-col justify-between p-6 transition-all duration-500 overflow-hidden"
+                         style="background-image: linear-gradient(135deg, rgba(250,245,242,0.85) 0%, rgba(234,219,211,0.65) 100%);">
+                        
+                        <!-- Top Sleeve subtle accent line -->
+                        <div class="w-8 h-[2px] bg-orange-300 rounded-full opacity-60"></div>
+
+                        <!-- Sleeve Typography -->
+                        <div class="space-y-1 pt-6 text-left">
+                            <span class="text-[9px] tracking-[0.3em] text-[#9c8477] uppercase block font-light">CATEGORY 03</span>
+                            <h3 class="text-sm tracking-[0.2em] text-neutral-800 font-normal">AI渲染</h3>
+                            <div class="w-full h-[1px] bg-neutral-300/30 my-2"></div>
+                            <span class="text-[8px] font-mono tracking-widest text-[#9c8477]/80">NEURAL EXPRESSION — 2023 / 2026</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY MODAL 1: Masterplanning -->
+    <div id="project-1" class="fixed inset-0 z-50 overflow-y-auto hidden no-print" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-neutral-900/30 backdrop-blur-sm transition-opacity" onclick="closeModal('project-1')"></div>
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl bg-white border border-neutral-100 overflow-hidden transform transition-all p-8 md:p-12 space-y-8 rounded-sm shadow-xl">
+                <button onclick="closeModal('project-1')" class="absolute top-6 right-6 p-2 text-neutral-400 hover:text-neutral-800 transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="space-y-2">
+                    <span class="text-[10px] uppercase tracking-widest text-neutral-400 block font-light">01 / Masterplanning Study</span>
+                    <h3 class="text-lg font-light tracking-wider text-neutral-800">总体空间规划体系</h3>
+                </div>
+
+                <!-- Abstract design rendering study representing PDF Page 3 landscape -->
+                <div class="border border-neutral-100 bg-neutral-50 rounded-sm p-4 text-center text-xs text-neutral-400 relative">
+                    <span class="text-[9px] uppercase tracking-wider font-light block mb-2">Ecosystem & Masterplanning Layout</span>
+                    
+                    <svg viewBox="0 0 400 240" class="w-full h-48 text-neutral-400 bg-neutral-50/50 border border-neutral-100 rounded-sm" fill="none" stroke="currentColor">
+                        <!-- Organic waterbody matching wetlands schematic -->
+                        <path d="M 20 200 Q 120 180, 200 120 T 380 60" stroke="#A4D3A5" stroke-width="2.5" fill="none" opacity="0.6"/>
+                        <path d="M 40 220 C 140 200, 180 140, 220 130 T 400 80" stroke="#A4D3A5" stroke-width="1.5" stroke-dasharray="2,2" fill="none" opacity="0.4"/>
+                        <!-- Masterplan networks -->
+                        <path d="M 50 30 L 150 70 M 150 70 L 220 120 M 50 80 L 130 110 M 130 110 L 180 160" stroke="#cccccc" stroke-width="0.75" />
+                        <path d="M 220 30 L 280 110 M 280 110 L 330 200" stroke="#cccccc" stroke-width="0.75" />
+                        <!-- Green buffer zones representation -->
+                        <path d="M 120 40 Q 140 60, 160 50 T 200 40" stroke="#A4D3A5" stroke-width="8" stroke-linecap="round" opacity="0.15" />
+                        <path d="M 240 130 Q 280 150, 310 140 T 350 160" stroke="#A4D3A5" stroke-width="12" stroke-linecap="round" opacity="0.15" />
+                        <!-- Circle Center representing "一芯" -->
+                        <circle cx="210" cy="110" r="18" stroke="#111111" stroke-width="0.75" stroke-dasharray="3,3" fill="rgba(164,211,165,0.05)"/>
+                        <circle cx="210" cy="110" r="6" fill="#A4D3A5" />
+                        <text x="210" y="140" text-anchor="middle" font-size="8" fill="#666666" font-family="sans-serif" letter-spacing="1">CORE CENTER / 核心一芯圈层</text>
+                    </svg>
+                    
+                    <p class="text-[8px] font-mono mt-2 text-neutral-400">[Ecosystem Core & Masterplanning Corridor Study Layout]</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 py-4 border-y border-neutral-100 text-xs text-textMuted">
+                    <div>
+                        <span class="text-neutral-400 block font-light">生态绿道集成</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">将多层生态廊道完美融入城市开发，确立宏观弹性架构</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-400 block font-light">核心开发圈层</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">基于多向科技活动轴，构建立体咬合的公共复合中心</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs text-textMuted font-light leading-relaxed">
+                    <p class="font-medium text-textMain">1. 宏观总体规划设计逻辑</p>
+                    <p>方案在宏观上构建了韧性十足的生态绿网络与慢行路网。通过台地化消隐、生态防洪屏障与现代科技园区组团的咬合设计，兼顾开发容量与自然调蓄需求。</p>
+                    
+                    <p class="font-medium text-textMain pt-2">2. 多专业与跨团队协调</p>
+                    <p>紧密协调多专业团队（生态、市政、景观、商业策划），确保中微观结构在功能合理性及落地方案上的高度自洽。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CASE STUDY MODAL 2: Typology & Streetscape -->
+    <div id="project-2" class="fixed inset-0 z-50 overflow-y-auto hidden no-print" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-neutral-900/30 backdrop-blur-sm transition-opacity" onclick="closeModal('project-2')"></div>
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl bg-white border border-neutral-100 overflow-hidden transform transition-all p-8 md:p-12 space-y-8 rounded-sm shadow-xl">
+                <button onclick="closeModal('project-2')" class="absolute top-6 right-6 p-2 text-neutral-400 hover:text-neutral-800 transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="space-y-2">
+                    <span class="text-[10px] uppercase tracking-widest text-neutral-400 block font-light">02 / Typology & Street Guidance Study</span>
+                    <h3 class="text-lg font-light tracking-wider text-neutral-800">中微观空间形态与类型学控制</h3>
+                </div>
+
+                <!-- Multi-frame design analysis matching Page 4 upper part -->
+                <div class="border border-neutral-100 bg-neutral-50 rounded-sm p-4 text-center text-xs text-neutral-400 relative">
+                    <span class="text-[9px] uppercase tracking-wider font-light block mb-2">Block Typology (150m-300m) & Street Guidance Design</span>
+                    
+                    <svg viewBox="0 0 400 240" class="w-full h-48 text-neutral-400 bg-neutral-50/50 border border-neutral-100 rounded-sm" fill="none" stroke="currentColor">
+                        <!-- 4 blocks layout (National Lab, R&D, Expert Apt, Industry Export) -->
+                        <g transform="translate(10, 10)">
+                            <rect x="0" y="10" width="70" height="70" stroke="#d4d4d4" stroke-width="0.75" fill="rgba(0,0,0,0.01)"/>
+                            <path d="M 5 15 L 45 15 L 45 45 L 65 45 L 65 75" stroke="#111111" stroke-width="1" />
+                            <text x="35" y="45" text-anchor="middle" font-size="7" fill="#666666">TYPE-A / 150m</text>
+                        </g>
+                        <g transform="translate(110, 10)">
+                            <rect x="0" y="10" width="70" height="70" stroke="#d4d4d4" stroke-width="0.75" fill="rgba(0,0,0,0.01)"/>
+                            <path d="M 10 15 L 60 15 L 60 75" stroke="#111111" stroke-width="1" />
+                            <text x="35" y="45" text-anchor="middle" font-size="7" fill="#666666">TYPE-B / 180m</text>
+                        </g>
+                        <g transform="translate(210, 10)">
+                            <rect x="0" y="10" width="70" height="70" stroke="#d4d4d4" stroke-width="0.75" fill="rgba(0,0,0,0.01)"/>
+                            <path d="M 15 15 L 55 15 L 55 55 L 15 55 Z" stroke="#111111" stroke-width="1" fill="rgba(164,211,165,0.08)"/>
+                            <text x="35" y="45" text-anchor="middle" font-size="7" fill="#666666">TYPE-C / 240m</text>
+                        </g>
+                        <g transform="translate(310, 10)">
+                            <rect x="0" y="10" width="70" height="70" stroke="#d4d4d4" stroke-width="0.75" fill="rgba(0,0,0,0.01)"/>
+                            <path d="M 5 15 L 65 15 M 5 35 L 65 35 M 5 55 L 65 55" stroke="#111111" stroke-width="1" />
+                            <text x="35" y="45" text-anchor="middle" font-size="7" fill="#666666">TYPE-D / 300m</text>
+                        </g>
+                        <!-- Streetscape cross section below -->
+                        <g transform="translate(10, 100)">
+                            <line x1="0" y1="80" x2="380" y2="80" stroke="#888" stroke-width="1" />
+                            <line x1="0" y1="100" x2="380" y2="100" stroke="#cccccc" stroke-width="0.5" stroke-dasharray="3,3" />
+                            <circle cx="80" cy="70" r="6" fill="#A4D3A5" opacity="0.6" />
+                            <line x1="80" y1="70" x2="80" y2="80" stroke="#666" stroke-width="1" />
+                            <circle cx="280" cy="70" r="6" fill="#A4D3A5" opacity="0.6" />
+                            <line x1="280" y1="70" x2="280" y2="80" stroke="#666" stroke-width="1" />
+                            <text x="190" y="93" text-anchor="middle" font-size="7" fill="#888888">STREET GUIDANCE SECTION / 街道空间断面及慢行缓冲</text>
+                        </g>
+                    </svg>
+
+                    <p class="text-[8px] font-mono mt-2 text-neutral-400">[Form-Finding Block Dimensions & Pedestrian Guidance Design Profile]</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 py-4 border-y border-neutral-100 text-xs text-textMuted">
+                    <div>
+                        <span class="text-neutral-400 block font-light">类型学研究 / Typology</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">对实验室、科研、公寓等多种建筑体量和退界进行形态学控制指导</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-400 block font-light">慢行缓冲断面 / Streetscape</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">制定系统的铺装、林冠层、人车分流及视线通廊的设计导则</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs text-textMuted font-light leading-relaxed">
+                    <p class="font-medium text-textMain">1. 城市空间精细控制</p>
+                    <p>对建筑主体的外缘切角、层数退台等空间边界进行了精确控制，并编制高水准的城市设计三维控制导则（Urban Design Guidelines），为区域开发建立系统化指导。</p>
+                    
+                    <p class="font-medium text-textMain pt-2">2. 人性化街道空间塑造</p>
+                    <p>推敲各组团的纵深与界面比例，使视线通廊朝向生态核心区完全敞开，创造舒缓适宜的微气候步行体验。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CASE STUDY MODAL 3: AI Rendering -->
+    <div id="project-3" class="fixed inset-0 z-50 overflow-y-auto hidden no-print" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-neutral-900/30 backdrop-blur-sm transition-opacity" onclick="closeModal('project-3')"></div>
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div class="relative w-full max-w-2xl bg-white border border-neutral-100 overflow-hidden transform transition-all p-8 md:p-12 space-y-8 rounded-sm shadow-xl">
+                <button onclick="closeModal('project-3')" class="absolute top-6 right-6 p-2 text-neutral-400 hover:text-neutral-800 transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="space-y-2">
+                    <span class="text-[10px] uppercase tracking-widest text-neutral-400 block font-light">03 / Generative Design & Rendering Atmosphere</span>
+                    <h3 class="text-lg font-light tracking-wider text-neutral-800">先锋AI辅助造型设计与材质光影打样</h3>
+                </div>
+
+                <!-- Abstract Canyon Hot Spring Resort Frame mirroring Page 4 bottom renderings -->
+                <div class="border border-neutral-100 bg-neutral-50 rounded-sm p-4 text-center text-xs text-neutral-400 relative">
+                    <span class="text-[9px] uppercase tracking-wider font-light block mb-2">Generative Atmosphere Study & Indoor Pool floating lights</span>
+                    
+                    <svg viewBox="0 0 400 240" class="w-full h-48 text-neutral-400 bg-neutral-900 border border-neutral-800 rounded-sm" fill="none" stroke="currentColor">
+                        <!-- Dark luxury styling for rendering study -->
+                        <rect width="400" height="240" fill="#111111" />
+                        <!-- Mountain silhouette -->
+                        <path d="M 0 160 L 80 80 L 150 120 L 260 40 L 340 110 L 400 70 L 400 240 L 0 240 Z" fill="#1a1a1a" stroke="none" />
+                        <path d="M 50 160 L 130 90 L 190 130 L 290 60 L 400 130" stroke="#333333" stroke-width="1" />
+                        <!-- Terraced hotel structures -->
+                        <path d="M 120 140 L 190 140 L 190 160 L 120 160 Z" fill="rgba(164,211,165,0.15)" stroke="#A4D3A5" stroke-width="0.75" />
+                        <path d="M 140 120 L 210 120 L 210 140 L 140 140 Z" fill="rgba(164,211,165,0.2)" stroke="#A4D3A5" stroke-width="0.75" />
+                        <path d="M 230 100 L 290 100 L 290 120 L 230 120 Z" fill="rgba(164,211,165,0.15)" stroke="#A4D3A5" stroke-width="0.75" />
+                        <!-- Spa pools / river bed steam -->
+                        <path d="M 40 200 Q 140 185, 240 210 T 360 190" stroke="#A4D3A5" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                        <!-- Serene Floating Spheres (Indoor Pool page 4 bottom-left) -->
+                        <circle cx="80" cy="210" r="10" fill="#ffffff" filter="drop-shadow(0 0 4px #A4D3A5)" stroke="none" opacity="0.8" />
+                        <circle cx="320" cy="205" r="8" fill="#ffffff" filter="drop-shadow(0 0 3px #A4D3A5)" stroke="none" opacity="0.8" />
+                        <text x="200" y="225" text-anchor="middle" font-size="7" fill="#999999" font-family="sans-serif">AMBIENT LIGHTS & TEXTURE RENDERING / 水面微光与烟雾粒子渲染</text>
+                    </svg>
+
+                    <p class="text-[8px] font-mono mt-2 text-neutral-400">[Canyon Resort Cascades & Serene Zen Floating Sphere Rendering]</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 py-4 border-y border-neutral-100 text-xs text-textMuted">
+                    <div>
+                        <span class="text-neutral-400 block font-light">高写实水石渲染</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">通过插值微调实现水体反射、暖意浮灯与粗糙岩石的材质真实表现</span>
+                    </div>
+                    <div>
+                        <span class="text-neutral-400 block font-light">形态概念推敲 / Form-Finding</span>
+                        <span class="font-normal mt-0.5 block text-neutral-800">对山岳高差、悬挑悬浮体量的建筑造型方案进行多角度生成与推论</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs text-textMuted font-light leading-relaxed">
+                    <p class="font-medium text-textMain">1. 神经网络辅助概念生成</p>
+                    <p>在设计概念前期（Form-Finding Stage），引入前沿生成式AI（Midjourney/Stable Diffusion）模型开展形态和空间意境探索。能在几秒内极速形成兼具东方禅意和高地高差特色的现代叠落山庄体量研究。</p>
+                    
+                    <p class="font-medium text-textMain pt-2">2. 精致微气候与光影材质写实</p>
+                    <p>利用局部重绘与精密参数，精准控制环境微光、石材铺装粗糙度以及温泉蒸汽等难以通过传统建模表现的高复杂度光影材质氛围，大幅缩减了方案比选周期。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT ME SECTION -->
+    <section id="contact" class="py-32 px-6 border-t border-neutral-100 bg-white no-print">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                <div class="md:col-span-4">
+                    <span class="text-[9px] uppercase tracking-[0.35em] text-neutral-400 block font-light">05 / Contact</span>
+                    <h2 class="text-xl font-light tracking-widest mt-2 text-neutral-800">与我联络</h2>
+                </div>
+                
+                <div class="md:col-span-8">
+                    <!-- Clean Contact Cards showing WeChat, Location, and Email only -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <div class="flex items-center space-x-3 p-4 border border-neutral-100 bg-minimalGray rounded-sm">
+                            <span class="text-neutral-400"><i class="fa-regular fa-envelope text-sm"></i></span>
+                            <div>
+                                <span class="text-neutral-400 font-light block text-[9px] uppercase tracking-wider">常用电子邮箱 / Email</span>
+                                <a href="mailto:gongyinzi@qq.com" class="hover:text-neutral-500 transition-colors text-neutral-800">gongyinzi@qq.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 p-4 border border-neutral-100 bg-minimalGray rounded-sm">
+                            <span class="text-neutral-400"><i class="fa-regular fa-envelope text-sm"></i></span>
+                            <div>
+                                <span class="text-neutral-400 font-light block text-[9px] uppercase tracking-wider">备用电子邮箱 / Backup Email</span>
+                                <a href="mailto:gongyinzi@gmail.com" class="hover:text-neutral-500 transition-colors text-neutral-800">gongyinzi@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 p-4 border border-neutral-100 bg-minimalGray rounded-sm">
+                            <span class="text-neutral-400"><i class="fa-brands fa-weixin text-sm"></i></span>
+                            <div>
+                                <span class="text-neutral-400 font-light block text-[9px] uppercase tracking-wider">微信号 / WeChat</span>
+                                <span class="text-neutral-800 font-mono select-all hover:text-accentGreen transition-colors" title="双击复制微信号">51487192</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 p-4 border border-neutral-100 bg-minimalGray rounded-sm">
+                            <span class="text-neutral-400"><i class="fa-solid fa-location-dot text-sm"></i></span>
+                            <div>
+                                <span class="text-neutral-400 font-light block text-[9px] uppercase tracking-wider">工作地点 / Current Location</span>
+                                <span class="text-neutral-800">中国 · 上海 / Shanghai, China</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-neutral-100 py-12 px-6 bg-pureWhite no-print">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="text-[9px] uppercase tracking-[0.25em] text-neutral-400 font-light">
+                Yinzi Gong © 2026 · ALL RIGHTS RESERVED
+            </span>
+            <span class="text-[9px] text-neutral-400 font-light">
+                Architectural Philosophy — Less, but Better.
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        // Modal State Controls
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden'); // Disable scroll
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden'); // Restore scroll
+        }
+
+        /* Custom Cursor Logic with interpolation (lerp) */
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorRing = document.getElementById('cursorRing');
+
+        let mouseX = -100;
+        let mouseY = -100;
+        let ringX = -100;
+        let ringY = -100;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Move dot instantly for high responsiveness
+            cursorDot.style.left = mouseX + 'px';
+            cursorDot.style.top = mouseY + 'px';
+        });
+
+        // Butter smooth lerp loop for the glass ring
+        function updateRingPosition() {
+            const ease = 0.15; // Lower = smoother & more lag, Higher = faster
+            ringX += (mouseX - ringX) * ease;
+            ringY += (mouseY - ringY) * ease;
+
+            cursorRing.style.left = ringX + 'px';
+            cursorRing.style.top = ringY + 'px';
+
+            requestAnimationFrame(updateRingPosition);
+        }
+        updateRingPosition();
+
+        // Detect hover elements and attach cursor scale behavior
+        const hoverables = 'a, button, input, textarea, select, [onclick], .folder-wrapper, .cursor-pointer';
+        
+        function setupCursorHoverEvents() {
+            const elements = document.querySelectorAll(hoverables);
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    document.body.classList.add('cursor-hover-active');
+                });
+                element.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('cursor-hover-active');
+                });
+            });
+        }
+        
+        // Initial setup
+        setupCursorHoverEvents();
+    </script>
+</body>
+</html>
